@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: task_manager_bot
+
+  data:
+    mongodb:
+      database: task_manager_bot
