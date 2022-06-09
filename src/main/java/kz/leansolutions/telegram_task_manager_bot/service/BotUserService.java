@@ -33,15 +33,7 @@ public class BotUserService {
         botUserRepo.deleteById(id);
     }
 
-    public BotUser save(BotUser botUser) {
-        return botUserRepo.save(botUser);
-    }
-
-    public boolean hasBotUserIntersectionWithTaskId(BotUser botUser, String taskId) {
-        return botUser.getUser() != null
-                && botUser.getUser().getTasks() != null
-                && botUser.getUser().getTasks()
-                .stream()
-                .anyMatch(t -> t.getId().equals(taskId));
+    public void save(BotUser botUser) {
+        botUserRepo.save(botUser);
     }
 }

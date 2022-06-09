@@ -1,10 +1,8 @@
 package kz.leansolutions.telegram_task_manager_bot.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
@@ -13,6 +11,9 @@ import java.util.List;
 @Document("users")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
     @Id
@@ -23,11 +24,12 @@ public class User {
 
     private String username;
 
+    @JsonIgnore
     private String password;
 
     private String phone;
 
-    @ReadOnlyProperty
+    @JsonIgnore
     @DocumentReference(lookup = "{'executor':?#{#self._id} }")
     private List<Task> tasks;
 

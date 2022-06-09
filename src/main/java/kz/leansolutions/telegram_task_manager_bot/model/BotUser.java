@@ -1,5 +1,6 @@
 package kz.leansolutions.telegram_task_manager_bot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,7 @@ public class BotUser {
     private String chatId;
     private Integer lastPinnedMessageId;
     private boolean isRegistered = false;
+    @JsonIgnore
     @DocumentReference
     private User user;
     private boolean inRegistration = false;

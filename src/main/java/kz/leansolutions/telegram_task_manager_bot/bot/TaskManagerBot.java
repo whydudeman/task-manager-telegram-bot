@@ -39,7 +39,7 @@ public class TaskManagerBot extends TelegramLongPollingBot {
     private static final String ENTER_PHONE = "Пожалуйста введите свой номер для регистрации";
     private static final String SEND_PHONE = "Отправить мой номер телефона для регистрации";
     private static final String AUTH_SUCCESS = "Вы успешно зарегистрированы";
-    private static final int TASKS_SIZE = 3;
+    private static final int TASKS_SIZE = 2;
     @Autowired
     private BotUserService botUserService;
     @Autowired
@@ -86,6 +86,7 @@ public class TaskManagerBot extends TelegramLongPollingBot {
                     log.error("Invalid CallBack Command {}", callBackCommand);
                     return;
                 }
+                log.info("Callback Command {}", callBackCommand);
                 Integer page = Integer.valueOf(pageAsString);
                 Page<Task> allByExecutor = taskService.getAllByExecutor(botUser.getUser(), page, TASKS_SIZE);
                 String tasksMsg = getPeriodTasksMsgFromList(allByExecutor.toList());
@@ -149,6 +150,7 @@ public class TaskManagerBot extends TelegramLongPollingBot {
         botUser.setUser(userOptional.get());
         botUserService.save(botUser);
         sendMessage(chatId, AUTH_SUCCESS);
+
     }
 
     private void processFinishTaskCommand(BotUser botUser, String messageText) {
@@ -244,7 +246,7 @@ public class TaskManagerBot extends TelegramLongPollingBot {
 
                 String buttonText = String.valueOf(i + 1);
                 if (i == tasks.getNumber())
-                    buttonText = String.join("-", buttonText, "-");
+                    buttonText = "-" + buttonText + "-";
                 InlineKeyboardButton button = InlineKeyboardButton.builder().text(buttonText).callbackData("page/" + i).build();
                 keyboardButtons.add(button);
             }
