@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class TaskRequest {
-    private String id;
     private String name;
     private String description;
     private String projectName;

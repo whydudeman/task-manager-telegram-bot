@@ -6,6 +6,10 @@ import lombok.Getter;
 public class IdResponse {
     private String id;
 
+    public static IdResponse get(Long id) {
+        return get(String.valueOf(id));
+    }
+
     public static IdResponse get(String id) {
         IdResponse idResponse = new IdResponse();
         idResponse.id = id;

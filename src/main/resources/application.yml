@@ -5,3 +5,8 @@ spring:
   data:
     mongodb:
       database: task_manager_bot
+telegram:
+  apiToken: 5343719970:AAFNh_CZx_OY2UoF2q4pMun2_wqPZLfNjt0
+  username: LeanTaskManagerBot
+cron:
+  checkDeadline: 0 19 14 * * ?

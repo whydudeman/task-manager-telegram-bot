@@ -1,6 +1,8 @@
 package kz.leansolutions.telegram_task_manager_bot.service;
 
+import kz.leansolutions.telegram_task_manager_bot.config.service.SequenceGeneratorService;
 import kz.leansolutions.telegram_task_manager_bot.dto.TaskRequest;
+import kz.leansolutions.telegram_task_manager_bot.model.Status;
 import kz.leansolutions.telegram_task_manager_bot.model.Task;
 import kz.leansolutions.telegram_task_manager_bot.model.User;
 import kz.leansolutions.telegram_task_manager_bot.repository.TaskRepo;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -19,6 +22,7 @@ import java.util.List;
 public class TaskService {
     private final TaskRepo taskRepo;
     private final UserService userService;
+    private final SequenceGeneratorService sequenceGeneratorService;
 
     public List<Task> getAllByExecutor(User user) {
         return taskRepo.findAllByExecutor(user);
@@ -28,16 +32,16 @@ public class TaskService {
         Pageable paging = PageRequest.of(
                 page,
                 size,
-                Sort.by(Sort.Direction.ASC, "deadline")
+                Sort.by(Sort.Direction.DESC, "deadline")
         );
         return taskRepo.findAllByExecutor(user, paging);
     }
 
-    public Task getById(String id) {
+    public Task getById(Long id) {
         return taskRepo.findById(id).orElse(null);
     }
 
-    public Task getByIdWithThrow(String id) {
+    public Task getByIdWithThrow(Long id) {
         return taskRepo.findById(id).orElseThrow(() -> new RuntimeException("ENTITY_DOES_NOT_EXISTS"));
     }
 
@@ -54,7 +58,7 @@ public class TaskService {
         User executor = userService.getById(taskRequest.getManagerId());
 
         Task task = Task.builder()
-                .id(taskRequest.getId())
+                .id(sequenceGeneratorService.generateSequence(Task.SEQUENCE_NAME))
                 .name(taskRequest.getName())
                 .description(taskRequest.getDescription())
                 .projectName(taskRequest.getProjectName())
@@ -88,7 +92,10 @@ public class TaskService {
         return save(updatedTask);
     }
 
-    public List<Task> getAllWithDeadlineTodayAndStatusIsNotDone() {
-        return taskRepo.findAllByDeadlineAndStatus(LocalDateTime.now());
+    public List<Task> getTasksWithPassedDeadlineWithStatusInProgress() {
+        return taskRepo
+                .findByStatusNotInAndDeadlineNotNullAndDeadlineBefore(
+                        Arrays.asList(Status.NOT_DONE, Status.DONE),
+                        LocalDateTime.now());
     }
 }
