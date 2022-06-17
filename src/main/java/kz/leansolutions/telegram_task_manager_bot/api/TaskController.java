@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/trigger")
 @AllArgsConstructor
@@ -39,7 +41,7 @@ public class TaskController {
 
     @PutMapping("/update-task/{id}")
     public ResponseEntity<IdResponse> updateTask(@PathVariable Long id,
-                                                 @RequestBody TaskRequest taskRequest) {
+                                                 @RequestBody @Valid TaskRequest taskRequest) {
         Task task = taskService.getByIdWithThrow(id);
         Task updated = taskService.update(task, taskRequest);
         notificationHandler.handleOneTaskNotification(updated, NotificationType.TASK_UPDATED);

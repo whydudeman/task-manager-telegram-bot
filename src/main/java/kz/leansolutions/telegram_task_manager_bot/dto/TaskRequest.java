@@ -19,7 +19,6 @@ public class TaskRequest {
     private LocalDateTime deadline;
     private Status status;
     private Priority priority;
-    @NotNull
     private String managerId;
     @NotNull
     private String executorId;

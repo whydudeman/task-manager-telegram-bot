@@ -191,7 +191,7 @@ public class TelegramNotificationService extends NotificationService {
                 values.put("projectName", task.getProjectName());
                 values.put("description", task.getDescription());
                 values.put("status", task.getStatus().getName());
-                values.put("manager", task.getManager().getName());
+                values.put("manager", task.getManager() != null ? task.getManager().getName() : "Отсутствует");
                 values.put("deadline", dateFormatter.format(task.getDeadline()));
                 values.put("daysToDeadline", String.valueOf(ChronoUnit.DAYS.between(task.getDeadline(), LocalDateTime.now())));
                 values.put("priority", task.getPriority().getName());

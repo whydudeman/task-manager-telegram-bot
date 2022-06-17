@@ -54,8 +54,8 @@ public class TaskService {
     }
 
     public Task create(TaskRequest taskRequest) {
-        User manager = userService.getById(taskRequest.getManagerId());
-        User executor = userService.getById(taskRequest.getManagerId());
+        User manager = taskRequest.getManagerId() != null ? userService.getById(taskRequest.getManagerId()) : null;
+        User executor = userService.getById(taskRequest.getExecutorId());
 
         Task task = Task.builder()
                 .id(sequenceGeneratorService.generateSequence(Task.SEQUENCE_NAME))
