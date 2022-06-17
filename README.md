@@ -58,18 +58,19 @@ localhost:8080/trigger/send-all-tasks/62ac711a517a3907db8088e2
 ## Telegram Bot interaction
 After creating a user u can open bot then click start command 
 
-```python
-import foobar
+![alt text](https://github.com/whydudeman/task-manager-telegram-bot/blob/main/readme-images/start_command.png)
 
-# returns 'words'
-foobar.pluralize('word')
+![alt text](https://github.com/whydudeman/task-manager-telegram-bot/blob/main/readme-images/registration.png)
 
-# returns 'geese'
-foobar.pluralize('goose')
+Getting All Tasks once a day or by trigger of endpoint
 
-# returns 'phenomenon'
-foobar.singularize('phenomena')
-```
+![alt text](https://github.com/whydudeman/task-manager-telegram-bot/blob/main/readme-images/tasks_no_pagination.png)
+
+![alt text](https://github.com/whydudeman/task-manager-telegram-bot/blob/main/readme-images/pagination.png)
+
+New Task Message 
+
+![alt text](https://github.com/whydudeman/task-manager-telegram-bot/blob/main/readme-images/new_task.png)
 
 ## License
 [No License]()
